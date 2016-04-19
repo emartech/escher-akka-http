@@ -24,7 +24,7 @@ trait EscherDirectives extends RequestBuilding with EscherAuthenticator {
   def signRequestWithHeaders(headers : List[HttpHeader])(serviceName:String)(implicit ec: ExecutionContext, mat: Materializer): (HttpRequest) => Future[HttpRequest] = { r =>
 
     val escher = setupEscher(createEscherForSigning(serviceName))
-    val defaultSignedHeaders = List("host", "X-Ems-Date")
+    val defaultSignedHeaders = List("host", escherConfig.dateHeaderName)
 
     for {
       body <- Unmarshal(r.entity).to[String]
