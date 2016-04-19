@@ -1,5 +1,7 @@
 package com.emarsys.escher.akka.http
 
+import java.util
+
 import akka.event.LoggingAdapter
 import akka.http.scaladsl.client.RequestBuilding
 import akka.http.scaladsl.model.{HttpHeader, HttpRequest}
@@ -12,6 +14,7 @@ import com.emarsys.escher.EscherException
 import spray.json._
 
 import scala.collection.JavaConversions._
+import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Try, Failure, Success}
 
@@ -24,7 +27,7 @@ trait EscherDirectives extends RequestBuilding with EscherAuthenticator {
   def signRequestWithHeaders(headers : List[HttpHeader])(serviceName:String)(implicit ec: ExecutionContext, mat: Materializer): (HttpRequest) => Future[HttpRequest] = { r =>
 
     val escher = setupEscher(createEscherForSigning(serviceName))
-    val defaultSignedHeaders = List("host", "X-Ems-Date")
+    val defaultSignedHeaders = List("host", escherConfig.dateHeaderName)
 
     for {
       body <- Unmarshal(r.entity).to[String]
@@ -36,7 +39,7 @@ trait EscherDirectives extends RequestBuilding with EscherAuthenticator {
         escherConfig.secret(serviceName),
         defaultSignedHeaders.union(headers.map(_.name))
       )
-      escherRequest.getHttpRequest.addHeaders(headers)
+      escherRequest.getHttpRequest
     }
   }
 
