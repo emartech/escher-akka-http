@@ -2,6 +2,7 @@ package com.emarsys.escher.akka.http.config
 import com.typesafe.config.Config
 
 import scala.collection.JavaConverters._
+import scala.io.Source
 import scala.util.Try
 
 class EscherConfig(config: Config) {
@@ -23,8 +24,14 @@ class EscherConfig(config: Config) {
 
   def key(service: String): String = findTrustedService(service).map(_.getString("key")).getOrElse("")
 
-  def secret(service: String): String = findTrustedService(service).map(_.getString("secret")).getOrElse("")
+  def secret(service: String): String = findTrustedService(service).map(config => readFromFileOrConf(config, "secret")).getOrElse("")
 
   def credentialScope(service: String): String = findTrustedService(service).map(_.getString("credential-scope")).getOrElse(credentialScope)
 
+  private def readFromFileOrConf(config: Config, path: String): String = {
+    val source = Try(Source.fromFile(config.getString(s"$path-file")))
+    val result = source.map(_.mkString).getOrElse(config.getString(path))
+    source.foreach(_.close())
+    result
+  }
 }
