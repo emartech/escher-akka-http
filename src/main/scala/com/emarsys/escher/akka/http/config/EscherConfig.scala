@@ -3,7 +3,7 @@ import com.typesafe.config.Config
 
 import scala.collection.JavaConverters._
 import scala.io.Source
-import scala.util.Try
+import scala.util.{Success, Try}
 
 class EscherConfig(config: Config) {
   val authHeaderName: String = config.getString("auth-header-name")
@@ -29,9 +29,19 @@ class EscherConfig(config: Config) {
   def credentialScope(service: String): String = findTrustedService(service).map(_.getString("credential-scope")).getOrElse(credentialScope)
 
   private def readFromFileOrConf(config: Config, path: String): String = {
-    val source = Try(Source.fromFile(config.getString(s"$path-file")))
-    val result = source.map(_.mkString).getOrElse(config.getString(path))
-    source.foreach(_.close())
-    result
+    Try(config.getString(s"$path-file")) match {
+      case Success(fileName) => readFromFile(fileName)
+      case _                 => config.getString(path)
+    }
   }
+
+  private def readFromFile(fileName: String): String = {
+    val source = Source.fromFile(fileName)
+    try {
+      source.mkString
+    } finally {
+      source.close()
+    }
+  }
+
 }

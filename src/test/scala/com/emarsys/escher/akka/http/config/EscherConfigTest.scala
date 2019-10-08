@@ -1,6 +1,6 @@
 package com.emarsys.escher.akka.http.config
 
-import java.io.{File, PrintWriter}
+import java.io.{File, FileNotFoundException, PrintWriter}
 import java.nio.file.Files
 
 import org.scalatest.{Matchers, WordSpec}
@@ -40,7 +40,7 @@ class EscherConfigTest extends WordSpec with Matchers {
        |      credential-scope = "eu/service/ems_request"
        |    },
        |    {
-       |      name = "fallback-service3"
+       |      name = "wrong-file-service3"
        |      key = "service3-key"
        |      secret = "service3-secret-key-0123"
        |      secret-file = "RANDOM_WRONG_PATH"
@@ -61,8 +61,8 @@ class EscherConfigTest extends WordSpec with Matchers {
     "read secret from file" in {
       escherConfig.secret("from-file-service2") shouldEqual "secret from file"
     }
-    "read secret from config after file failed" in {
-      escherConfig.secret("fallback-service3") shouldEqual "service3-secret-key-0123"
+    "throw error when file path is set but can't read" in {
+      an[FileNotFoundException] should be thrownBy escherConfig.secret("wrong-file-service3")
     }
   }
 }
