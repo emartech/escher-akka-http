@@ -15,7 +15,7 @@ libraryDependencies ++= {
     "com.typesafe.akka"  %% "akka-stream"          % akkaStreamV,
     "com.typesafe.akka"  %% "akka-stream-testkit"  % akkaStreamV % Test,
     "org.scalatest"      %% "scalatest"            % scalaTestV % Test,
-    "com.emarsys"        %  "escher"               % "0.3.2"
+    "com.emarsys"        %  "escher"               % "0.3.3"
   )
 }
 
