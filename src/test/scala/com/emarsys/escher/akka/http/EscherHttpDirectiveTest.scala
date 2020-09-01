@@ -8,10 +8,11 @@ import akka.http.scaladsl.server._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.emarsys.escher.akka.http.config.EscherConfig
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 class EscherHttpDirectiveTest
-  extends WordSpec
+  extends AnyWordSpec
     with Matchers
     with ScalatestRouteTest
     with ScalaFutures

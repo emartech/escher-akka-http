@@ -5,11 +5,12 @@ import java.net.URI
 import akka.http.scaladsl.model.headers.RawHeader
 import akka.http.scaladsl.model.{HttpEntity, HttpMethods, HttpRequest, Uri}
 import com.emarsys.escher.EscherRequest
-import org.scalatest.{FlatSpec, Matchers}
 
 import scala.collection.JavaConverters._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class EscherHttpRequestTest extends FlatSpec with Matchers {
+class EscherHttpRequestTest extends AnyFlatSpec with Matchers {
 
   private val httpRequest = HttpRequest(
     method = HttpMethods.DELETE,
