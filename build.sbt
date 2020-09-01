@@ -6,7 +6,7 @@ scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf
 
 libraryDependencies ++= {
   val akkaHttpV  = "10.1.11"
-  val akkaStreamV = "2.5.31"
+  val akkaStreamV = "2.6.8"
   val scalaTestV = "3.0.8"
   Seq(
     "com.typesafe.akka"  %% "akka-http-core"       % akkaHttpV,
