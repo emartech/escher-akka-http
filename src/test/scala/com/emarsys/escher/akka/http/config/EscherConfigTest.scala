@@ -3,9 +3,10 @@ package com.emarsys.escher.akka.http.config
 import java.io.{File, FileNotFoundException, PrintWriter}
 import java.nio.file.Files
 
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class EscherConfigTest extends WordSpec with Matchers {
+class EscherConfigTest extends AnyWordSpec with Matchers {
 
   private val tempFilePath = {
     val path = Files.createTempFile("escher-test-", ".secret").toAbsolutePath.toString
