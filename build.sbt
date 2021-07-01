@@ -5,7 +5,7 @@ crossScalaVersions := List("2.13.5", "2.12.13")
 scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
 
 libraryDependencies ++= {
-  val akkaStreamV = "2.6.14"
+  val akkaStreamV = "2.6.15"
   val akkaHttpV  = "10.2.4"
   val scalaTestV = "3.2.9"
   Seq(
