@@ -1,6 +1,6 @@
 organization  := "com.emarsys"
 name          := "escher-akka-http"
-crossScalaVersions := List("2.13.5", "2.12.13")
+crossScalaVersions := List("2.13.6", "2.12.13")
 
 scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
 
